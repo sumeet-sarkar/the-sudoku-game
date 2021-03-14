@@ -1,0 +1,35 @@
+.game-box {
+    width: 80vw;
+    height: 80vh;
+    min-width: 192px;
+    min-height: 336px;
+    border: 1px solid black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.box-3x3 {
+    width: calc(calc(100% / 3) - 2px);
+    height: calc(calc(100% / 3) - 2px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    border: 1px solid rgb(10, 102, 194);
+}
+
+.box-3x3 input {
+    width: calc(100% / 3);
+    max-height: calc(100% / 3);
+    height: calc(100% / 3);
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+input[type=number] {
+    -moz-appearance: textfield;
+}
