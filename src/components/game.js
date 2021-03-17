@@ -2,36 +2,33 @@ import React from 'react'
 
 import './game.css'
 
-const box3x3Func = () => {
+const box3x3Func = row => {
 
-    return(
+    return (
         <div className="box-3x3">
-            <input type="number" name="name" min="1" max="9"></input>
-            <input type="number" name="name" min="1" max="9"></input>
-            <input type="number" name="name" min="1" max="9"></input>
-            <input type="number" name="name" min="1" max="9"></input>
-            <input type="number" name="name" min="1" max="9"></input>
-            <input type="number" name="name" min="1" max="9"></input>
-            <input type="number" name="name" min="1" max="9"></input>
-            <input type="number" name="name" min="1" max="9"></input>
-            <input type="number" name="name" min="1" max="9"></input>
+            {row.map(elem => {
+                let value;
+                if(elem!==0) value = elem 
+                return(
+                    <input type="number" name="name" min="1" max="9" value={value}></input>
+                )
+            })}
         </div>
     )
 }
 
-function sudokuBox() {
-    const box3x3 = box3x3Func()
+const sudokuBox = props => {
+    const rows = props.puzzle.map( box => {
+        return box3x3Func(box)
+    });
+
     return(
         <div className="game-box">
-            {box3x3}
-            {box3x3}
-            {box3x3}
-            {box3x3}
-            {box3x3}
-            {box3x3}
-            {box3x3}
-            {box3x3}
-            {box3x3}
+            {rows.map(row=>{
+                return(
+                    row
+                )
+            })}
         </div>
     )
 }
