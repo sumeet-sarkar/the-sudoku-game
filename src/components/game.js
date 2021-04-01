@@ -2,15 +2,20 @@ import React from 'react'
 
 import './game.css'
 
-const box3x3Func = row => {
+const Set3x3box = props => {
 
     return (
         <div className="box-3x3">
-            {row.map(elem => {
+            {props.row.map((elem, index) => {
                 let value;
-                if(elem!==0) value = elem 
+                let readOnly = false;
+                if(elem!==0) {
+                    value = elem 
+                    readOnly = true;
+                }
+                const key = props.boxIndex + index
                 return(
-                    <input type="number" name="name" min="1" max="9" value={value}></input>
+                    <input key={key} id={key} type="number" name="name" min="1" max="9" readOnly={readOnly} value={value}></input>
                 )
             })}
         </div>
@@ -18,15 +23,16 @@ const box3x3Func = row => {
 }
 
 const sudokuBox = props => {
-    const rows = props.puzzle.map( box => {
-        return box3x3Func(box)
-    });
 
-    return(
+    return (
         <div className="game-box">
-            {rows.map(row=>{
-                return(
-                    row
+            {props.puzzle.map((box, index) => {
+                return (
+                    <Set3x3box
+                        key={index}
+                        row={box}
+                        boxIndex={index.toString()}
+                    />
                 )
             })}
         </div>
