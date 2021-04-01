@@ -54,12 +54,31 @@ class Container extends Component {
         ]
     }
 
+    transform = (puzzle) => {
+
+        const transformedPuzzle = []
+        for (let boxIterator = 0; boxIterator<9;boxIterator++) {
+            const box=[]
+            const rowBoundary = parseInt(boxIterator/3) * 3
+            for(let row = rowBoundary; row < rowBoundary+3; ++row) {
+                const columnBoundary = parseInt(boxIterator%3) * 3
+                for(let col = columnBoundary; col < columnBoundary+3; ++col) {
+                    box.push(puzzle[row][col])
+                }
+            }
+            transformedPuzzle.push(box)
+        }
+        return transformedPuzzle
+    }
+
     render() {
-        return(
+        const ans = this.transform(this.state.puzzle)
+
+        return (
             <div className="container">
                 <header>Welcome to the Sudoku Game</header>
                 <Game 
-                    puzzle = {this.state.puzzle}
+                    puzzle = {ans}
                 />
                 <footer>Your participation is highly appreciated</footer>
             </div>
