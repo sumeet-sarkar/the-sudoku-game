@@ -9,13 +9,25 @@ const Set3x3box = props => {
             {props.row.map((elem, index) => {
                 let value;
                 let readOnly = false;
-                if(elem!==0) {
+                if(props.question[props.boxIndex][index]!==0) {
                     value = elem 
                     readOnly = true;
                 }
-                const key = props.boxIndex + index
+                const key = props.boxIndex + index.toString()
+
                 return(
-                    <input key={key} id={key} type="number" name="name" min="1" max="9" readOnly={readOnly} value={value}></input>
+                    <input 
+                        key={key}
+                        id={key}
+                        type="number"
+                        name="name"
+                        min="1"
+                        max="9"
+                        readOnly={readOnly}
+                        autoComplete="off"
+                        value={value}
+                    >
+                    </input>
                 )
             })}
         </div>
@@ -31,7 +43,8 @@ const sudokuBox = props => {
                     <Set3x3box
                         key={index}
                         row={box}
-                        boxIndex={index.toString()}
+                        boxIndex={index}
+                        question = {props.question}
                     />
                 )
             })}
