@@ -5,7 +5,7 @@ import './game.css'
 const Set3x3box = props => {
 
     return (
-        <div className="box-3x3">
+        <div className="box-3x3" box={props.boxIndex}>
             {props.row.map((elem, index) => {
                 let value;
                 let readOnly = false;
@@ -15,10 +15,15 @@ const Set3x3box = props => {
                 }
                 const key = props.boxIndex + index.toString()
 
+                const row = (parseInt(props.boxIndex/3) * 3) + parseInt(index/3)
+                const column = (parseInt(props.boxIndex%3) * 3) + parseInt(index%3)
+
                 return(
                     <input 
                         key={key}
                         id={key}
+                        row={row}
+                        column={column}
                         type="number"
                         name="name"
                         min="1"
