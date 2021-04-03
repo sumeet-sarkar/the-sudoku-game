@@ -20,3 +20,17 @@ footer {
     font-size: larger;
     margin: auto;
 }
+
+.error-row {
+    border-top:1px solid #FF0000;
+    border-bottom:1px solid #FF0000;
+}
+
+.error-column {
+    border-left:1px solid #FF0000;
+    border-right:1px solid #FF0000;
+}
+
+.error-box {
+    border:1px solid #FF0000;
+}
