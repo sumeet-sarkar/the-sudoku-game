@@ -34,38 +34,38 @@ class Container extends Component {
                 [1, 0, 0, 0, 9, 0, 0, 0, 3],
                 [0, 0, 9, 8, 0, 0, 0, 6, 0]
             ],
-            rows: [
-                "156789",
-                "134567",
-                "123478",
-                "23456789",
-                "149",
-                "12345789",
-                "134679",
-                "245678",
-                "123457",
+            rows:[
+                "243",
+                "928",
+                "695",
+                "1",
+                "725368",
+                "6",
+                "825",
+                "193",
+                "986"
             ],
             columns: [
-                "234578",
-                "134569",
-                "1345678",
-                "13479",
-                "1345678",
-                "12678",
-                "1245789",
-                "123479",
-                "245679",
+                "961",
+                "278",
+                "29",
+                "6528",
+                "29",
+                "4935",
+                "36",
+                "586",
+                "13",
             ],
             boxes: [
-                "1345678",
-                "135789",
-                "124679",
-                "134589",
-                "1246789",
-                "234579",
-                "234567",
-                "13467",
-                "1245789",
+                "29",
+                "4269",
+                "385",
+                "726",
+                "53",
+                "168",
+                "819",
+                "2598",
+                "36",
             ]
         }
     }
@@ -87,6 +87,45 @@ class Container extends Component {
         return transformedPuzzle
     }
 
+    updateElement = (updateElement, oldValue, value) => {
+        if(updateElement.indexOf(value) !== -1) {
+            updateElement += value
+            alert("You're heading towards a wrong solution..")
+        } else {
+            if(isNaN(value)) {
+                updateElement = updateElement.replace(oldValue, '')
+            } else {
+                updateElement += value
+            }
+        }
+        return updateElement
+    }
+
+    inputHandler = (event) => {
+        const row = (parseInt(event.target.id[0]/3) * 3) + parseInt(event.target.id[1]/3)
+        const col = (parseInt(event.target.id[0]%3) * 3) + parseInt(event.target.id[1]%3)
+
+        const puzzle = [...this.state.puzzle]
+
+        const rows = [...this.state.rows]
+        rows[row] = this.updateElement(rows[row], puzzle[row][col], event.target.valueAsNumber)
+
+        const columns = [...this.state.columns]
+        columns[col] = this.updateElement(columns[col], puzzle[row][col], event.target.valueAsNumber)
+
+        const boxes = [...this.state.boxes]
+        boxes[event.target.id[0]] = this.updateElement(boxes[event.target.id[0]], puzzle[row][col], event.target.valueAsNumber)
+
+        puzzle[row][col] = event.target.valueAsNumber
+
+        this.setState ({
+            puzzle:puzzle,
+            rows: rows,
+            columns: columns,
+            boxes: boxes
+        })
+    }
+
     render() {
         const ans = this.transform(this.state.puzzle)
         const question = this.transform(this.question)
@@ -97,6 +136,7 @@ class Container extends Component {
                 <Game 
                     puzzle = {ans}
                     question = {question}
+                    inputHandler = {this.inputHandler}
                 />
                 <footer>Your participation is highly appreciated</footer>
             </div>

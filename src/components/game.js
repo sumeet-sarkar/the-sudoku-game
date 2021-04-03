@@ -26,7 +26,7 @@ const Set3x3box = props => {
                         readOnly={readOnly}
                         autoComplete="off"
                         value={value}
-                    >
+                        onChange={props.inputHandler}>
                     </input>
                 )
             })}
@@ -44,6 +44,7 @@ const sudokuBox = props => {
                         key={index}
                         row={box}
                         boxIndex={index}
+                        inputHandler={props.inputHandler}
                         question = {props.question}
                     />
                 )
