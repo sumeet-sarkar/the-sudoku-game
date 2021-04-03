@@ -22,6 +22,41 @@ class Container extends Component {
             [0, 0, 9, 8, 0, 0, 0, 6, 0]
         ]
 
+        this.rows = [
+            "243",
+            "928",
+            "695",
+            "1",
+            "725368",
+            "6",
+            "825",
+            "193",
+            "986"
+        ]
+
+        this.columns = [
+            "961",
+            "278",
+            "29",
+            "6528",
+            "29",
+            "4935",
+            "36",
+            "586",
+            "13",
+        ]
+        this.boxes = [
+            "29",
+            "4269",
+            "385",
+            "726",
+            "53",
+            "168",
+            "819",
+            "2598",
+            "36",
+        ]
+
         this.state = {
             puzzle: [
                 [0, 2, 0, 0, 0, 4, 3, 0, 0],
@@ -33,39 +68,6 @@ class Container extends Component {
                 [0, 8, 0, 2, 0, 5, 0, 0, 0],
                 [1, 0, 0, 0, 9, 0, 0, 0, 3],
                 [0, 0, 9, 8, 0, 0, 0, 6, 0]
-            ],
-            rows:[
-                "243",
-                "928",
-                "695",
-                "1",
-                "725368",
-                "6",
-                "825",
-                "193",
-                "986"
-            ],
-            columns: [
-                "961",
-                "278",
-                "29",
-                "6528",
-                "29",
-                "4935",
-                "36",
-                "586",
-                "13",
-            ],
-            boxes: [
-                "29",
-                "4269",
-                "385",
-                "726",
-                "53",
-                "168",
-                "819",
-                "2598",
-                "36",
             ]
         }
     }
@@ -107,34 +109,28 @@ class Container extends Component {
 
         const puzzle = [...this.state.puzzle]
 
-        const rows = [...this.state.rows]
-        rows[row] = this.updateElement(rows[row], puzzle[row][col], event.target.valueAsNumber)
+        this.rows[row] = this.updateElement(this.rows[row], puzzle[row][col], event.target.valueAsNumber)
 
-        const columns = [...this.state.columns]
-        columns[col] = this.updateElement(columns[col], puzzle[row][col], event.target.valueAsNumber)
+        this.columns[col] = this.updateElement(this.columns[col], puzzle[row][col], event.target.valueAsNumber)
 
-        const boxes = [...this.state.boxes]
-        boxes[event.target.id[0]] = this.updateElement(boxes[event.target.id[0]], puzzle[row][col], event.target.valueAsNumber)
+        this.boxes[event.target.id[0]] = this.updateElement(this.boxes[event.target.id[0]], puzzle[row][col], event.target.valueAsNumber)
 
         puzzle[row][col] = event.target.valueAsNumber
 
         this.setState ({
-            puzzle:puzzle,
-            rows: rows,
-            columns: columns,
-            boxes: boxes
+            puzzle:puzzle
         })
     }
 
     render() {
-        const ans = this.transform(this.state.puzzle)
+        const puzzle = this.transform(this.state.puzzle)
         const question = this.transform(this.question)
 
         return (
             <div className="container">
                 <header>Welcome to the Sudoku Game</header>
                 <Game 
-                    puzzle = {ans}
+                    puzzle = {puzzle}
                     question = {question}
                     inputHandler = {this.inputHandler}
                 />
