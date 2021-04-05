@@ -9,7 +9,7 @@ const Set3x3box = props => {
             {props.row.map((elem, index) => {
                 let value;
                 let readOnly = false;
-                if(props.question[props.boxIndex][index]!==0) {
+                if(!isNaN(props.question[props.boxIndex][index])) {
                     value = elem 
                     readOnly = true;
                 }

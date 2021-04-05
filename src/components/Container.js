@@ -11,51 +11,51 @@ class Container extends Component {
         super(props)
 
         this.question = [
-            [0, 2, 0, 0, 0, 4, 3, 0, 0],
-            [9, 0, 0, 0, 2, 0, 0, 0, 8],
-            [0, 0, 0, 6, 0, 9, 0, 5, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 1],
-            [0, 7, 2, 5, 0, 3, 6, 8, 0],
-            [6, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 8, 0, 2, 0, 5, 0, 0, 0],
-            [1, 0, 0, 0, 9, 0, 0, 0, 3],
-            [0, 0, 9, 8, 0, 0, 0, 6, 0]
+            [NaN, 2, NaN, NaN, NaN, 4, 3, NaN, NaN],
+            [9, NaN, NaN, NaN, 2, NaN, NaN, NaN, 8],
+            [NaN, NaN, NaN, 6, NaN, 9, NaN, 5, NaN],
+            [NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, 1],
+            [NaN, 7, 2, 5, NaN, 3, 6, 8, NaN],
+            [6, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN],
+            [NaN, 8, NaN, 2, NaN, 5, NaN, NaN, NaN],
+            [1, NaN, NaN, NaN, 9, NaN, NaN, NaN, 3],
+            [NaN, NaN, 9, 8, NaN, NaN, NaN, 6, NaN]
         ]
 
         this.rows = [
-            "243",
-            "928",
-            "695",
-            "1",
-            "725368",
-            "6",
-            "825",
-            "193",
-            "986"
+            "243NaNNaNNaNNaNNaNNaN",
+            "928NaNNaNNaNNaNNaNNaN",
+            "695NaNNaNNaNNaNNaNNaN",
+            "1NaNNaNNaNNaNNaNNaNNaNNaN",
+            "725368NaNNaNNaN",
+            "6NaNNaNNaNNaNNaNNaNNaNNaN",
+            "825NaNNaNNaNNaNNaNNaN",
+            "193NaNNaNNaNNaNNaNNaN",
+            "986NaNNaNNaNNaNNaNNaN"
         ]
 
         this.columns = [
-            "961",
-            "278",
-            "29",
-            "6528",
-            "29",
-            "4935",
-            "36",
-            "586",
-            "138",
+            "961NaNNaNNaNNaNNaNNaN",
+            "278NaNNaNNaNNaNNaNNaN",
+            "29NaNNaNNaNNaNNaNNaNNaN",
+            "6528NaNNaNNaNNaNNaN",
+            "29NaNNaNNaNNaNNaNNaNNaN",
+            "4935NaNNaNNaNNaNNaN",
+            "36NaNNaNNaNNaNNaNNaNNaN",
+            "586NaNNaNNaNNaNNaNNaN",
+            "138NaNNaNNaNNaNNaNNaN",
         ]
 
         this.boxes = [
-            "29",
-            "4269",
-            "385",
-            "726",
-            "53",
-            "168",
-            "819",
-            "2598",
-            "36",
+            "29NaNNaNNaNNaNNaNNaNNaN",
+            "4269NaNNaNNaNNaNNaN",
+            "385NaNNaNNaNNaNNaNNaN",
+            "726NaNNaNNaNNaNNaNNaN",
+            "53NaNNaNNaNNaNNaNNaNNaN",
+            "168NaNNaNNaNNaNNaNNaN",
+            "819NaNNaNNaNNaNNaNNaN",
+            "2598NaNNaNNaNNaNNaN",
+            "36NaNNaNNaNNaNNaNNaNNaN",
         ]
 
         this.errorRows = ""
@@ -64,15 +64,15 @@ class Container extends Component {
 
         this.state = {
             puzzle: [
-                [0, 2, 0, 0, 0, 4, 3, 0, 0],
-                [9, 0, 0, 0, 2, 0, 0, 0, 8],
-                [0, 0, 0, 6, 0, 9, 0, 5, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0, 1],
-                [0, 7, 2, 5, 0, 3, 6, 8, 0],
-                [6, 0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 8, 0, 2, 0, 5, 0, 0, 0],
-                [1, 0, 0, 0, 9, 0, 0, 0, 3],
-                [0, 0, 9, 8, 0, 0, 0, 6, 0]
+                [NaN, 2, NaN, NaN, NaN, 4, 3, NaN, NaN],
+                [9, NaN, NaN, NaN, 2, NaN, NaN, NaN, 8],
+                [NaN, NaN, NaN, 6, NaN, 9, NaN, 5, NaN],
+                [NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, 1],
+                [NaN, 7, 2, 5, NaN, 3, 6, 8, NaN],
+                [6, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN],
+                [NaN, 8, NaN, 2, NaN, 5, NaN, NaN, NaN],
+                [1, NaN, NaN, NaN, 9, NaN, NaN, NaN, 3],
+                [NaN, NaN, 9, 8, NaN, NaN, NaN, 6, NaN]
             ]
         }
     }
