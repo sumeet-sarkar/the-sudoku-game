@@ -2,6 +2,12 @@ import React from 'react'
 
 import './game.css'
 
+const removePeriodInput = (event) => {
+    if(event.key==="."){
+        event.preventDefault()
+    }
+}
+
 const Set3x3box = props => {
 
     return (
@@ -28,10 +34,12 @@ const Set3x3box = props => {
                         name="name"
                         min="1"
                         max="9"
+                        maxLength="1"
                         readOnly={readOnly}
                         autoComplete="off"
                         value={value}
-                        onChange={props.inputHandler}>
+                        onKeyPress={removePeriodInput}
+                        onInput={props.inputHandler}>
                     </input>
                 )
             })}

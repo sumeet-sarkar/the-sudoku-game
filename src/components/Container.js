@@ -131,7 +131,17 @@ class Container extends Component {
         return updateElement.replace(oldValue, newValue)
     }
 
+    inputCheck = (value) => {
+        value = value.replace(/[^0-9]/g,'')
+        if (value.length > 1) {
+            value = value[value.length-1]
+        }
+        return value
+    }
+
     inputHandler = (event) => {
+
+        event.target.value = this.inputCheck(event.target.value)
 
         const row = (parseInt(event.target.id[0]/3) * 3) + parseInt(event.target.id[1]/3)
         const col = (parseInt(event.target.id[0]%3) * 3) + parseInt(event.target.id[1]%3)
