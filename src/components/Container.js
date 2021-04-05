@@ -23,39 +23,39 @@ class Container extends Component {
         ]
 
         this.rows = [
-            "243NaNNaNNaNNaNNaNNaN",
-            "928NaNNaNNaNNaNNaNNaN",
-            "695NaNNaNNaNNaNNaNNaN",
-            "1NaNNaNNaNNaNNaNNaNNaNNaN",
-            "725368NaNNaNNaN",
-            "6NaNNaNNaNNaNNaNNaNNaNNaN",
-            "825NaNNaNNaNNaNNaNNaN",
-            "193NaNNaNNaNNaNNaNNaN",
-            "986NaNNaNNaNNaNNaNNaN"
+            "243",
+            "928",
+            "695",
+            "1",
+            "725368",
+            "6",
+            "825",
+            "193",
+            "986"
         ]
 
         this.columns = [
-            "961NaNNaNNaNNaNNaNNaN",
-            "278NaNNaNNaNNaNNaNNaN",
-            "29NaNNaNNaNNaNNaNNaNNaN",
-            "6528NaNNaNNaNNaNNaN",
-            "29NaNNaNNaNNaNNaNNaNNaN",
-            "4935NaNNaNNaNNaNNaN",
-            "36NaNNaNNaNNaNNaNNaNNaN",
-            "586NaNNaNNaNNaNNaNNaN",
-            "138NaNNaNNaNNaNNaNNaN",
+            "961",
+            "278",
+            "29",
+            "6528",
+            "29",
+            "4935",
+            "36",
+            "586",
+            "138",
         ]
 
         this.boxes = [
-            "29NaNNaNNaNNaNNaNNaNNaN",
-            "4269NaNNaNNaNNaNNaN",
-            "385NaNNaNNaNNaNNaNNaN",
-            "726NaNNaNNaNNaNNaNNaN",
-            "53NaNNaNNaNNaNNaNNaNNaN",
-            "168NaNNaNNaNNaNNaNNaN",
-            "819NaNNaNNaNNaNNaNNaN",
-            "2598NaNNaNNaNNaNNaN",
-            "36NaNNaNNaNNaNNaNNaNNaN",
+            "29",
+            "4269",
+            "385",
+            "726",
+            "53",
+            "168",
+            "819",
+            "2598",
+            "36",
         ]
 
         this.errorRows = ""
@@ -94,45 +94,41 @@ class Container extends Component {
         return transformedPuzzle
     }
 
-    updateErrors = (updateErrors, index, element, oldValue, newValue, str) => {
+    updateErrors = (updateErrors, index, element, str) => {
 
-        if(isNaN(newValue)){
-            let count = 0
-            for(let i = 0; i<element.length; i++){
-                if(element[i] == oldValue) {
-                    count++
-                }
+        let isError = false
+        const set = {}
+        for(let i = 0; i<element.length; i++) {
+            if(set[element[i]]) {
+                set[element[i]]++
+                isError = true
+            } else {
+                set[element[i]] = 1
             }
-            if(count===2) {
-                updateErrors = updateErrors.replace(index, '')
-                document.querySelectorAll(`[${str}='${index}']`).forEach(element => {
-                    element.classList.remove(`error-${str}`)
-                })
-            }
-            return
         }
 
-        if(element.indexOf(newValue) === -1 ) {
-            return
-        }
-
-        if(element.indexOf(newValue) !== -1 && updateErrors.indexOf(index) === -1) {
-            updateErrors += index
+        if(updateErrors.indexOf(index) === -1 && isError) {
             document.querySelectorAll(`[${str}='${index}']`).forEach(element => {
                 element.classList.add(`error-${str}`)
             })
-            return
+            updateErrors += index
         }
+
+        if(updateErrors.indexOf(index) !== -1 && !isError) {
+            document.querySelectorAll(`[${str}='${index}']`).forEach(element => {
+                element.classList.remove(`error-${str}`)
+            })
+            updateErrors = updateErrors.replace(index, '')
+        }
+        return updateErrors
     }
 
-    updateElement = (updateElement, index, oldValue, newValue) => {
+    updateElement = (updateElement, oldValue, newValue) => {
 
-        if(isNaN(newValue)) {
-            updateElement[index] = updateElement[index].replace(oldValue, '')
+        if(isNaN(oldValue)) {
+            return updateElement + newValue
         }
-        else {
-            updateElement[index] += newValue
-        }
+        return updateElement.replace(oldValue, newValue)
     }
 
     inputHandler = (event) => {
@@ -143,14 +139,14 @@ class Container extends Component {
 
         const puzzle = [...this.state.puzzle]
 
-        this.updateErrors(this.errorRows, row, this.rows[row], puzzle[row][col], event.target.valueAsNumber, "row")
-        this.updateElement(this.rows, row, puzzle[row][col], event.target.valueAsNumber)
+        this.rows[row] = this.updateElement(this.rows[row], puzzle[row][col], event.target.value)
+        this.errorRows = this.updateErrors(this.errorRows, row, this.rows[row], "row")
 
-        this.updateErrors(this.errorColumns, col, this.columns[col], puzzle[row][col], event.target.valueAsNumber, "column")
-        this.updateElement(this.columns, col, puzzle[row][col], event.target.valueAsNumber)
+        this.columns[col] = this.updateElement(this.columns[col], puzzle[row][col], event.target.value)
+        this.errorColumns = this.updateErrors(this.errorColumns, col, this.columns[col], "column")
 
-        this.updateErrors(this.errorBoxes, box, this.boxes[box], puzzle[row][col], event.target.valueAsNumber, "box")
-        this.updateElement(this.boxes, box, puzzle[row][col], event.target.valueAsNumber)
+        this.boxes[box] = this.updateElement(this.boxes[box], puzzle[row][col], event.target.value)
+        this.errorBoxes = this.updateErrors(this.errorBoxes, box, this.boxes[box], "box")
 
         puzzle[row][col] = event.target.valueAsNumber
 
