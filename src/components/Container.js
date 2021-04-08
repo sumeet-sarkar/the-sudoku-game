@@ -22,41 +22,31 @@ class Container extends Component {
             [NaN, NaN, 9, 8, NaN, NaN, NaN, 6, NaN]
         ]
 
-        this.rows = [
-            "243",
-            "928",
-            "695",
-            "1",
-            "725368",
-            "6",
-            "825",
-            "193",
-            "986"
-        ]
+        this.rows = []
+        this.question.forEach(rows => {
+            const row = rows.filter(elem => {
+                return !isNaN(elem)
+            })
+            this.rows.push(row.join(""))
+        })
 
-        this.columns = [
-            "961",
-            "278",
-            "29",
-            "6528",
-            "29",
-            "4935",
-            "36",
-            "586",
-            "138",
-        ]
+        this.columns = []
+        for(let i = 0; i< 9; i++){
+            let col = ""
+            for (let j = 0; j<9; j++) {
+                if(!isNaN(this.question[j][i]))
+                    col += this.question[j][i]
+            }
+            this.columns.push(col)
+        }
 
-        this.boxes = [
-            "29",
-            "4269",
-            "385",
-            "726",
-            "53",
-            "168",
-            "819",
-            "2598",
-            "36",
-        ]
+        this.boxes = []
+        this.transform(this.question).forEach(rows => {
+            const row = rows.filter(elem => {
+                return !isNaN(elem)
+            })
+            this.boxes.push(row.join(""))
+        })
 
         this.errorRows = ""
         this.errorColumns = ""
@@ -64,16 +54,16 @@ class Container extends Component {
 
         this.state = {
             puzzle: [
-                [NaN, 2, NaN, NaN, NaN, 4, 3, NaN, NaN],
-                [9, NaN, NaN, NaN, 2, NaN, NaN, NaN, 8],
-                [NaN, NaN, NaN, 6, NaN, 9, NaN, 5, NaN],
-                [NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, 1],
-                [NaN, 7, 2, 5, NaN, 3, 6, 8, NaN],
-                [6, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN],
-                [NaN, 8, NaN, 2, NaN, 5, NaN, NaN, NaN],
-                [1, NaN, NaN, NaN, 9, NaN, NaN, NaN, 3],
-                [NaN, NaN, 9, 8, NaN, NaN, NaN, 6, NaN]
-            ]
+                [...this.question[0]],
+                [...this.question[1]],
+                [...this.question[2]],
+                [...this.question[3]],
+                [...this.question[4]],
+                [...this.question[5]],
+                [...this.question[6]],
+                [...this.question[7]],
+                [...this.question[8]],
+            ],
         }
     }
 
