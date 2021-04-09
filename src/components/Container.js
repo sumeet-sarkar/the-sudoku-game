@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 
 import Game from './game'
+import Modal from './common/modal'
 
 import './Container.css'
 
@@ -48,6 +49,15 @@ class Container extends Component {
             this.boxes.push(row.join(""))
         })
 
+        this.naNCount = 0
+        this.question.forEach(row => {
+            row.forEach(elem => {
+                if (isNaN(elem)) {
+                    this.naNCount++
+                }
+            })
+        })
+
         this.errorRows = ""
         this.errorColumns = ""
         this.errorBoxes = ""
@@ -64,6 +74,7 @@ class Container extends Component {
                 [...this.question[7]],
                 [...this.question[8]],
             ],
+            didWin: false
         }
     }
 
@@ -129,6 +140,22 @@ class Container extends Component {
         return value
     }
 
+    updateNaNCount = (newValue, oldValue) => {
+        if(isNaN(oldValue)) {
+            --this.naNCount
+        }
+        if(isNaN(newValue)) {
+            ++this.naNCount
+        }
+    }
+
+    checkDidWin = () => {
+        if(this.naNCount === 0 && this.errorRows.length === 0 && this.errorColumns.length === 0 && this.errorBoxes.length === 0) {
+            return true
+        }
+        return false
+    }
+
     inputHandler = (event) => {
 
         event.target.value = this.inputCheck(event.target.value)
@@ -148,10 +175,14 @@ class Container extends Component {
         this.boxes[box] = this.updateElement(this.boxes[box], puzzle[row][col], event.target.value)
         this.errorBoxes = this.updateErrors(this.errorBoxes, box, this.boxes[box], "box")
 
+        this.updateNaNCount(event.target.valueAsNumber, puzzle[row][col])
+        const didWin = this.checkDidWin()
+
         puzzle[row][col] = event.target.valueAsNumber
 
         this.setState ({
-            puzzle:puzzle
+            puzzle:puzzle,
+            didWin: didWin
         })
     }
 
@@ -168,6 +199,11 @@ class Container extends Component {
                     question = {question}
                     inputHandler = {this.inputHandler}
                 />
+                {this.state.didWin && 
+                <Modal 
+                    text = "Congratulations!! You've completed this game."
+                />
+                }
                 <footer>Your participation is highly appreciated</footer>
             </div>
         )
