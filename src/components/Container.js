@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import axios from 'axios'
 
 import Game from './game'
 import Modal from './common/modal'
@@ -8,9 +9,12 @@ import './Container.css'
 
 class Container extends Component {
 
-    constructor(props) {
-        super(props)
+    state = {
+        puzzle: null,
+        didWin: false
+    }
 
+    setClassVariables = () => {
         this.question = [
             [NaN, 2, NaN, NaN, NaN, 4, 3, NaN, NaN],
             [9, NaN, NaN, NaN, 2, NaN, NaN, NaN, 8],
@@ -61,21 +65,6 @@ class Container extends Component {
         this.errorRows = ""
         this.errorColumns = ""
         this.errorBoxes = ""
-
-        this.state = {
-            puzzle: [
-                [...this.question[0]],
-                [...this.question[1]],
-                [...this.question[2]],
-                [...this.question[3]],
-                [...this.question[4]],
-                [...this.question[5]],
-                [...this.question[6]],
-                [...this.question[7]],
-                [...this.question[8]],
-            ],
-            didWin: false
-        }
     }
 
     transform = (puzzle) => {
@@ -186,19 +175,40 @@ class Container extends Component {
         })
     }
 
-    render() {
+    componentDidMount() {
+        axios.get('https://jsonplaceholder.typicode.com/posts')
+            .then( () => {
+                this.setClassVariables()
+            })
+            .then(() => {
+                const puzzle = [
+                    [...this.question[0]],
+                    [...this.question[1]],
+                    [...this.question[2]],
+                    [...this.question[3]],
+                    [...this.question[4]],
+                    [...this.question[5]],
+                    [...this.question[6]],
+                    [...this.question[7]],
+                    [...this.question[8]],
+                ]
+                this.setState({
+                    puzzle: puzzle
+                })
+            })
+    }
 
-        const puzzle = this.transform(this.state.puzzle)
-        const question = this.transform(this.question)
+    render() {
 
         return (
             <div className="container">
                 <header>Welcome to the Sudoku Game</header>
+                {this.state.puzzle &&
                 <Game 
-                    puzzle = {puzzle}
-                    question = {question}
+                    puzzle = {this.transform(this.state.puzzle)}
+                    question = {this.transform(this.question)}
                     inputHandler = {this.inputHandler}
-                />
+                />}
                 {this.state.didWin && 
                 <Modal 
                     text = "Congratulations!! You've completed this game."
