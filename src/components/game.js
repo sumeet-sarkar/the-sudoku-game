@@ -50,7 +50,7 @@ const Set3x3box = props => {
 const sudokuBox = props => {
 
     return (
-        <div className="game-box">
+        <>
             {props.puzzle.map((box, index) => {
                 return (
                     <Set3x3box
@@ -62,7 +62,7 @@ const sudokuBox = props => {
                     />
                 )
             })}
-        </div>
+        </>
     )
 }
 

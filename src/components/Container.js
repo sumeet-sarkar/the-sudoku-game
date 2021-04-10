@@ -11,7 +11,8 @@ class Container extends Component {
 
     state = {
         puzzle: null,
-        didWin: false
+        didWin: false,
+        loading: true,
     }
 
     setClassVariables = () => {
@@ -181,20 +182,23 @@ class Container extends Component {
                 this.setClassVariables()
             })
             .then(() => {
-                const puzzle = [
-                    [...this.question[0]],
-                    [...this.question[1]],
-                    [...this.question[2]],
-                    [...this.question[3]],
-                    [...this.question[4]],
-                    [...this.question[5]],
-                    [...this.question[6]],
-                    [...this.question[7]],
-                    [...this.question[8]],
-                ]
-                this.setState({
-                    puzzle: puzzle
-                })
+                setTimeout(() => {
+                    const puzzle = [
+                        [...this.question[0]],
+                        [...this.question[1]],
+                        [...this.question[2]],
+                        [...this.question[3]],
+                        [...this.question[4]],
+                        [...this.question[5]],
+                        [...this.question[6]],
+                        [...this.question[7]],
+                        [...this.question[8]],
+                    ]
+                    this.setState({
+                        puzzle: puzzle,
+                        loading: false,
+                    })
+                }, 2000)
             })
     }
 
@@ -203,12 +207,20 @@ class Container extends Component {
         return (
             <div className="container">
                 <header>Welcome to the Sudoku Game</header>
-                {this.state.puzzle &&
-                <Game 
-                    puzzle = {this.transform(this.state.puzzle)}
-                    question = {this.transform(this.question)}
-                    inputHandler = {this.inputHandler}
-                />}
+
+                <div className="game-box">
+                    {this.state.loading &&
+                    <>
+                        <i className="fa fa-refresh fa-spin fa-5x"></i>
+                    </>
+                    }
+                    {this.state.puzzle &&
+                    <Game 
+                        puzzle = {this.transform(this.state.puzzle)}
+                        question = {this.transform(this.question)}
+                        inputHandler = {this.inputHandler}
+                    />}
+                </div>
                 {this.state.didWin && 
                 <Modal 
                     text = "Congratulations!! You've completed this game."
