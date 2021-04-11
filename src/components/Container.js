@@ -3,6 +3,7 @@ import axios from 'axios'
 
 import Game from './game'
 import Modal from './common/modal'
+import ErrorBoundary from '../errorBoundary/ErrorBoundary'
 
 import './Container.css'
 
@@ -205,29 +206,30 @@ class Container extends Component {
     render() {
 
         return (
-            <div className="container">
-                <header>Welcome to the Sudoku Game</header>
 
-                <div className="game-box">
+            <ErrorBoundary>
+                <div className="container">
+                    <header>Welcome to the Sudoku Game</header>
+
+                    <div className="game-box">
                     {this.state.loading &&
-                    <>
-                        <i className="fa fa-refresh fa-spin fa-5x"></i>
-                    </>
+                    <i className="fa fa-refresh fa-spin fa-5x"></i>
                     }
-                    {this.state.puzzle &&
-                    <Game 
-                        puzzle = {this.transform(this.state.puzzle)}
-                        question = {this.transform(this.question)}
-                        inputHandler = {this.inputHandler}
-                    />}
+                        {this.state.puzzle &&
+                        <Game 
+                            puzzle = {this.transform(this.state.puzzle)}
+                            question = {this.transform(this.question)}
+                            inputHandler = {this.inputHandler}
+                        />}
+                    </div>
+                    {this.state.didWin && 
+                    <Modal 
+                        text = "Congratulations!! You've completed this game."
+                    />
+                    }
+                    <footer>Your participation is highly appreciated</footer>
                 </div>
-                {this.state.didWin && 
-                <Modal 
-                    text = "Congratulations!! You've completed this game."
-                />
-                }
-                <footer>Your participation is highly appreciated</footer>
-            </div>
+            </ErrorBoundary>
         )
     }
 }
