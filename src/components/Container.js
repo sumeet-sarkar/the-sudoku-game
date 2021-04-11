@@ -201,6 +201,17 @@ class Container extends Component {
                     })
                 }, 2000)
             })
+            .catch(error => {
+                this.setState({
+                    loading: false
+                })
+                if(error.message === "Network Error") {
+                    alert("You're offline :(\nPlease refresh once you're back online..")
+                }
+                else {
+                    alert(error.message)
+                }
+            })
     }
 
     render() {
