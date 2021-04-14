@@ -4,7 +4,7 @@ import axios from 'axios'
 import Game from './game'
 import Modal from './common/modal'
 import ErrorBoundary from '../errorBoundary/ErrorBoundary'
-import Timer from './Timer';
+import Timer from './Timer.tsx';
 
 import './Container.css'
 

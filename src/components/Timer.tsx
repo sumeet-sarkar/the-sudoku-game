@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
-
+import { useState, useEffect } from 'react';
+import * as React from 'react';
 import './Timer.css'
 
-function Timer() {
-    const [timerSecs, setTimerSecs] = useState(0)
+const Timer: React.FC = () => {
+    const [timerSecs, setTimerSecs] = useState<number>(0)
 
     useEffect(() => {
         const timerTimeout = setTimeout(function() {
