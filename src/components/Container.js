@@ -4,6 +4,7 @@ import axios from 'axios'
 import Game from './game'
 import Modal from './common/modal'
 import ErrorBoundary from '../errorBoundary/ErrorBoundary'
+import Timer from './Timer';
 
 import './Container.css'
 
@@ -223,15 +224,18 @@ class Container extends Component {
                     <header>Welcome to the Sudoku Game</header>
 
                     <div className="game-box">
-                    {this.state.loading &&
-                    <i className="fa fa-refresh fa-spin fa-5x"></i>
-                    }
+                        {this.state.loading &&
+                        <i className="fa fa-refresh fa-spin fa-5x"></i>
+                        }
                         {this.state.puzzle &&
                         <Game 
                             puzzle = {this.transform(this.state.puzzle)}
                             question = {this.transform(this.question)}
                             inputHandler = {this.inputHandler}
                         />}
+                        {!this.state.loading && 
+                        <Timer/>
+                        }
                     </div>
                     {this.state.didWin && 
                     <Modal 
