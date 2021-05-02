@@ -4,8 +4,8 @@ import axios from 'axios'
 import Game from './game'
 import Modal from './common/modal'
 import ErrorBoundary from '../errorBoundary/ErrorBoundary'
-import Timer from './Timer.tsx';
 import Header from './header.tsx'
+import Configuration from './configuration.tsx'
 
 import './Container.css'
 
@@ -223,7 +223,11 @@ class Container extends Component {
             <ErrorBoundary>
                 <div className="container">
                     <Header/>
-                    
+
+                    <Configuration 
+                        isLoading = {this.state.loading}
+                    />
+
                     <div className="game-box">
                         {this.state.loading &&
                         <i className="fa fa-refresh fa-spin fa-5x"></i>
@@ -234,10 +238,8 @@ class Container extends Component {
                             question = {this.transform(this.question)}
                             inputHandler = {this.inputHandler}
                         />}
-                        {!this.state.loading && 
-                        <Timer/>
-                        }
                     </div>
+
                     {this.state.didWin && 
                     <Modal 
                         text = "Congratulations!! You've completed this game."
