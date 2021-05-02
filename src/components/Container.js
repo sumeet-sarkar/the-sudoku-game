@@ -5,6 +5,7 @@ import Game from './game'
 import Modal from './common/modal'
 import ErrorBoundary from '../errorBoundary/ErrorBoundary'
 import Timer from './Timer.tsx';
+import Header from './header.tsx'
 
 import './Container.css'
 
@@ -221,8 +222,8 @@ class Container extends Component {
 
             <ErrorBoundary>
                 <div className="container">
-                    <header>Welcome to the Sudoku Game</header>
-
+                    <Header/>
+                    
                     <div className="game-box">
                         {this.state.loading &&
                         <i className="fa fa-refresh fa-spin fa-5x"></i>

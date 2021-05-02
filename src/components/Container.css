@@ -11,12 +11,6 @@
     flex-direction: column;
 }
 
-header {
-    width: 100vw;
-    font-size: larger;
-    margin: auto;
-}
-
 footer {
     width: 100vw;
     font-size: larger;
