@@ -4,7 +4,7 @@ import axios from 'axios'
 import Game from './game'
 import Modal from './common/modal'
 import ErrorBoundary from '../errorBoundary/ErrorBoundary'
-import Header from './header.tsx'
+import Header from './header/header.tsx'
 import Configuration from './configuration.tsx'
 
 import './Container.css'
