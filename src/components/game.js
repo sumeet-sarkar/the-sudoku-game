@@ -1,5 +1,3 @@
-import React from 'react'
-
 import './game.css'
 
 const removePeriodInput = (event) => {
