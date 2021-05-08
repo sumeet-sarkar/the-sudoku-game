@@ -6,6 +6,7 @@ import Modal from './common/modal'
 import ErrorBoundary from '../errorBoundary/ErrorBoundary'
 import Header from './header/header.tsx'
 import Configuration from './configuration.tsx'
+import questions from '../mockData/puzzles'
 
 import './Container.css'
 
@@ -18,18 +19,21 @@ class Container extends Component {
         loading: true,
     }
 
+    getRandomQuestion = () => {
+        let randomInt = Math.floor(Math.random() * 3)
+        while(randomInt === this.randomInt) {
+            randomInt = Math.floor(Math.random() * 3)
+        }
+        this.randomInt = randomInt
+
+        return questions[this.difficulty][this.randomInt]
+    }
+
     setClassVariables = () => {
-        this.question = [
-            [NaN, 2, NaN, NaN, NaN, 4, 3, NaN, NaN],
-            [9, NaN, NaN, NaN, 2, NaN, NaN, NaN, 8],
-            [NaN, NaN, NaN, 6, NaN, 9, NaN, 5, NaN],
-            [NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, 1],
-            [NaN, 7, 2, 5, NaN, 3, 6, 8, NaN],
-            [6, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN],
-            [NaN, 8, NaN, 2, NaN, 5, NaN, NaN, NaN],
-            [1, NaN, NaN, NaN, 9, NaN, NaN, NaN, 3],
-            [NaN, NaN, 9, 8, NaN, NaN, NaN, 6, NaN]
-        ]
+
+        this.difficulty = "hard"
+
+        this.question = this.getRandomQuestion()
 
         this.rows = []
         this.question.forEach(rows => {
