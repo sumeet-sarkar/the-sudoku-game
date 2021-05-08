@@ -17,6 +17,7 @@ class Container extends Component {
         puzzle: null,
         didWin: false,
         loading: true,
+        difficulty: "easy",
     }
 
     getRandomQuestion = () => {
@@ -26,12 +27,10 @@ class Container extends Component {
         }
         this.randomInt = randomInt
 
-        return questions[this.difficulty][this.randomInt]
+        return questions[this.state.difficulty][this.randomInt]
     }
 
     setClassVariables = () => {
-
-        this.difficulty = "hard"
 
         this.question = this.getRandomQuestion()
 
@@ -188,6 +187,12 @@ class Container extends Component {
         this.setStatePuzzle()
     }
 
+    changeDifficulty = (event) => {
+        this.setState({
+            difficulty: event.target.value
+        })
+    }
+
     setStatePuzzle = () => {
         const puzzle = [
             [...this.question[0]],
@@ -206,7 +211,11 @@ class Container extends Component {
         })
     }
 
-
+    componentDidUpdate(prevProps, prevState) {
+        if(this.state.difficulty !== prevState.difficulty){
+            this.startNewGame()
+        }
+    }
 
     componentDidMount() {
         axios.get('https://jsonplaceholder.typicode.com/posts')
@@ -240,6 +249,7 @@ class Container extends Component {
                     <Configuration 
                         isLoading = {this.state.loading}
                         newGame = {this.startNewGame}
+                        changeDifficulty = {this.changeDifficulty}
                     />
 
                     <div className="game-box">

@@ -6,8 +6,9 @@ import './Timer.css'
 
 
 interface Props {
-    isLoading: boolean;
-    newGame: React.MouseEventHandler<HTMLButtonElement> | undefined
+    isLoading: boolean
+    newGame: React.MouseEventHandler<HTMLButtonElement>
+    changeDifficulty: React.ChangeEventHandler<HTMLSelectElement>
 }
 
 const gameConfiguration = (props: Props): JSX.Element => {
@@ -31,7 +32,7 @@ const gameConfiguration = (props: Props): JSX.Element => {
 
                 <div>
                     <label>Difficulty: </label>
-                    <select>
+                    <select onChange={props.changeDifficulty}>
                         <option value="easy" defaultValue="true">Easy</option>
                         <option value="medium">Medium</option>
                         <option value="hard">Hard</option>
