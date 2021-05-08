@@ -13,12 +13,8 @@ const Set3x3box = props => {
     return (
         <div className="box-3x3" box={props.boxIndex}>
             {props.row.map((elem, index) => {
-                let value;
-                let readOnly = false;
-                if(!isNaN(props.question[props.boxIndex][index])) {
-                    value = elem 
-                    readOnly = true;
-                }
+                const value = elem || ""
+                const readOnly = !isNaN(props.question[props.boxIndex][index]) ? true: false
                 const key = props.boxIndex + index.toString()
 
                 const row = (parseInt(props.boxIndex/3) * 3) + parseInt(index/3)
