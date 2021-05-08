@@ -7,6 +7,7 @@ import './Timer.css'
 
 interface Props {
     isLoading: boolean;
+    newGame: React.MouseEventHandler<HTMLButtonElement> | undefined
 }
 
 const gameConfiguration = (props: Props): JSX.Element => {
@@ -25,6 +26,7 @@ const gameConfiguration = (props: Props): JSX.Element => {
             
                 <Button
                     text={"New Game"}
+                    clicked={props.newGame}
                 />
 
                 <div>

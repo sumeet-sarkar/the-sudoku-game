@@ -183,28 +183,37 @@ class Container extends Component {
         })
     }
 
+    startNewGame = () => {
+        this.setClassVariables()
+        this.setStatePuzzle()
+    }
+
+    setStatePuzzle = () => {
+        const puzzle = [
+            [...this.question[0]],
+            [...this.question[1]],
+            [...this.question[2]],
+            [...this.question[3]],
+            [...this.question[4]],
+            [...this.question[5]],
+            [...this.question[6]],
+            [...this.question[7]],
+            [...this.question[8]],
+        ]
+        this.setState({
+            puzzle: puzzle,
+            loading: false,
+        })
+    }
+
+
+
     componentDidMount() {
         axios.get('https://jsonplaceholder.typicode.com/posts')
             .then( () => {
                 this.setClassVariables()
-            })
-            .then(() => {
                 setTimeout(() => {
-                    const puzzle = [
-                        [...this.question[0]],
-                        [...this.question[1]],
-                        [...this.question[2]],
-                        [...this.question[3]],
-                        [...this.question[4]],
-                        [...this.question[5]],
-                        [...this.question[6]],
-                        [...this.question[7]],
-                        [...this.question[8]],
-                    ]
-                    this.setState({
-                        puzzle: puzzle,
-                        loading: false,
-                    })
+                    this.setStatePuzzle()
                 }, 2000)
             })
             .catch(error => {
@@ -230,6 +239,7 @@ class Container extends Component {
 
                     <Configuration 
                         isLoading = {this.state.loading}
+                        newGame = {this.startNewGame}
                     />
 
                     <div className="game-box">
