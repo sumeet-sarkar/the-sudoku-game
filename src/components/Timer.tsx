@@ -1,19 +1,21 @@
-import { useState, useEffect } from 'react';
-import * as React from 'react';
+import { useEffect } from 'react'
+import { useSelector, useDispatch, RootStateOrAny } from 'react-redux'
+import * as React from 'react'
 import './Timer.css'
 
 const Timer: React.FC = () => {
-    const [timerSecs, setTimerSecs] = useState<number>(0)
+    const timerSecs = useSelector((state: RootStateOrAny) => state.timerSecs)
+    const dispatch = useDispatch()
 
     useEffect(() => {
         const timerTimeout = setTimeout(function() {
-            setTimerSecs(timerSecs + 1)
+            dispatch({ type: 'increment' })
         }, 1000)
 
         return () => {
             clearTimeout(timerTimeout)
         }
-    }, [timerSecs])
+    })
 
     return (
         <div className='timer'>
