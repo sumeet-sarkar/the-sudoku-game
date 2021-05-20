@@ -1,5 +1,6 @@
 import Timer from './Timer';
 import Button from './common/button'
+import { useDispatch } from 'react-redux'
 
 import './configuration.css'
 import './Timer.css'
@@ -11,7 +12,10 @@ interface Props {
     changeDifficulty: React.ChangeEventHandler<HTMLSelectElement>
 }
 
-const gameConfiguration = (props: Props): JSX.Element => {
+const GameConfiguration = (props: Props): JSX.Element => {
+
+    const dispatch = useDispatch()
+
     const timerInitial = (): JSX.Element => {
         return(
             <div className='timer'>
@@ -20,19 +24,29 @@ const gameConfiguration = (props: Props): JSX.Element => {
         )
     }
 
+    const newGameHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+        dispatch({ type: 'newGame' })
+        props.newGame(e)
+    }
+
+    const changeDifficultyHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        dispatch({ type: 'newGame' })
+        props.changeDifficulty(e)
+    }
+
     return(
         <div className="main-configuration">
 
             <div className="actionable-configurations">
-            
+
                 <Button
                     text={"New Game"}
-                    clicked={props.newGame}
+                    clicked={newGameHandler}
                 />
 
                 <div>
                     <label>Difficulty: </label>
-                    <select onChange={props.changeDifficulty}>
+                    <select onChange={changeDifficultyHandler}>
                         <option value="easy" defaultValue="true">Easy</option>
                         <option value="medium">Medium</option>
                         <option value="hard">Hard</option>
@@ -53,4 +67,4 @@ const gameConfiguration = (props: Props): JSX.Element => {
     )
 }
 
-export default gameConfiguration
+export default GameConfiguration
