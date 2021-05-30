@@ -1,5 +1,6 @@
 import { Component } from 'react'
 import axios from 'axios'
+import { withRouter } from 'react-router-dom'
 
 import Game from './game'
 import Modal from './common/modal'
@@ -30,12 +31,43 @@ class Container extends Component {
         return questions[this.state.difficulty][this.randomInt]
     }
 
-    setClassVariables = () => {
+    getQuestion = () => {
+        const questionQueryParam = new URLSearchParams(window.location.search).get('question')
 
-        this.question = this.getRandomQuestion()
+        if(questionQueryParam) {
+            const finalQuestion = []
+            let test = []
+
+            let i = 0
+            while (i < questionQueryParam.length) {
+                if (questionQueryParam[i] === 'n') {
+                    i++
+                    test.push(questionQueryParam[i])
+                }
+                else {
+                    test.push(NaN)
+                }
+                if(test.length === 9) {
+                    finalQuestion.push(test)
+                    test = []
+                }
+                i++
+            }
+            return finalQuestion
+        }
+        return this.getRandomQuestion()
+    }
+
+    setQuestion = () => {
+
+        this.question = this.getQuestion()
+        this.setClassVariablesHelper(this.question)
+    }
+
+    setClassVariablesHelper = (question) => {
 
         this.rows = []
-        this.question.forEach(rows => {
+        question.forEach(rows => {
             const row = rows.filter(elem => {
                 return !isNaN(elem)
             })
@@ -46,14 +78,14 @@ class Container extends Component {
         for(let i = 0; i< 9; i++){
             let col = ""
             for (let j = 0; j<9; j++) {
-                if(!isNaN(this.question[j][i]))
-                    col += this.question[j][i]
+                if(!isNaN(question[j][i]))
+                    col += question[j][i]
             }
             this.columns.push(col)
         }
 
         this.boxes = []
-        this.transform(this.question).forEach(rows => {
+        this.transform(question).forEach(rows => {
             const row = rows.filter(elem => {
                 return !isNaN(elem)
             })
@@ -61,7 +93,7 @@ class Container extends Component {
         })
 
         this.naNCount = 0
-        this.question.forEach(row => {
+        question.forEach(row => {
             row.forEach(elem => {
                 if (isNaN(elem)) {
                     this.naNCount++
@@ -182,9 +214,31 @@ class Container extends Component {
         })
     }
 
+    removeErrorClassesFromDOM = () => {
+
+        const errorRows = document.getElementsByClassName('error-row')
+        while (errorRows.length > 0) {
+            errorRows[0].classList.remove('error-row')
+        }
+
+        const errorColumns = document.getElementsByClassName('error-column')
+        while (errorColumns.length > 0) {
+            errorColumns[0].classList.remove('error-column')
+        }
+
+        const errorBoxes = document.getElementsByClassName('error-box')
+        while (errorBoxes.length > 0) {
+            errorBoxes[0].classList.remove('error-box')
+        }
+    }
+
     startNewGame = () => {
-        this.setClassVariables()
+        this.props.history.push( {
+            search: ''
+        })
+        this.setQuestion()
         this.setStatePuzzle()
+        this.removeErrorClassesFromDOM()
     }
 
     changeDifficulty = (event) => {
@@ -205,10 +259,44 @@ class Container extends Component {
             [...this.question[7]],
             [...this.question[8]],
         ]
+
+        const queryParams = new URLSearchParams(window.location.search)
+        const question = queryParams.get('question')
+        if(question) {
+            let i = 0
+            let char = 0
+            while (i<question.length) {
+                if (question[i] === '0') {
+                    ++char
+                }
+                else if (question[i] !== 'n') {
+                    puzzle[parseInt(char/9)][char%9] = question[i]
+                    ++char
+                }
+                ++i
+            }
+        }
+
+        function setClassVariablesHelper() {
+
+            if(question) {
+                this.setClassVariablesHelper(puzzle)
+                for(let row = 0; row < 9; row++) {
+                    this.errorRows = this.updateErrors(this.errorRows, row, this.rows[row], 'row')
+                }
+                for(let col = 0; col < 9; col++) {
+                    this.errorColumns = this.updateErrors(this.errorColumns, col, this.columns[col], 'column')
+                }
+                for(let box = 0; box < 9; box++) {
+                    this.errorBoxes = this.updateErrors(this.errorBoxes, box, this.boxes[box], 'box')
+                }
+            }
+        }
+
         this.setState({
             puzzle: puzzle,
             loading: false,
-        })
+        }, setClassVariablesHelper)
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -220,10 +308,10 @@ class Container extends Component {
     componentDidMount() {
         axios.get('https://jsonplaceholder.typicode.com/posts')
             .then( () => {
-                this.setClassVariables()
+                this.setQuestion()
                 setTimeout(() => {
                     this.setStatePuzzle()
-                }, 2000)
+                }, 0)
             })
             .catch(error => {
                 this.setState({
@@ -250,6 +338,8 @@ class Container extends Component {
                         isLoading = {this.state.loading}
                         newGame = {this.startNewGame}
                         changeDifficulty = {this.changeDifficulty}
+                        puzzle = {this.state.puzzle}
+                        question = {this.question}
                     />
 
                     <div className="game-box">
@@ -276,4 +366,4 @@ class Container extends Component {
     }
 }
 
-export default Container
+export default withRouter(Container)

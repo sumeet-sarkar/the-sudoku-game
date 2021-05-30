@@ -12,6 +12,10 @@
     justify-content: space-between;
 }
 
-.actionable-configurations button{
+.actionable-configurations button {
+    margin-right: 16px;
+}
+
+.actionable-configurations div {
     margin-right: 16px;
 }

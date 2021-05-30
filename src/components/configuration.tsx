@@ -10,6 +10,8 @@ interface Props {
     isLoading: boolean
     newGame: React.MouseEventHandler<HTMLButtonElement>
     changeDifficulty: React.ChangeEventHandler<HTMLSelectElement>
+    puzzle: number[][]
+    question: number[][]
 }
 
 const GameConfiguration = (props: Props): JSX.Element => {
@@ -34,6 +36,33 @@ const GameConfiguration = (props: Props): JSX.Element => {
         props.changeDifficulty(e)
     }
 
+    const shareGameHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+        let progress = ''
+        let row = 0        
+        while(row < props.puzzle.length) {
+            let column = 0
+            while (column < props.puzzle[row].length) {
+                if(isNaN(props.puzzle[row][column])) {
+                    progress += '0'
+                }
+                else if (!isNaN(props.question[row][column])) {
+                    progress += 'n' + props.puzzle[row][column]
+                }
+                else {
+                    progress += props.puzzle[row][column]
+                }
+                column += 1
+            }
+            row += 1
+        }
+
+        const url = window.location.origin + window.location.pathname + '?question=' + progress
+        const inputElement: any = document.getElementById('share')
+        inputElement.value = url
+        inputElement.select()
+        document.execCommand("copy");
+    }
+
     return(
         <div className="main-configuration">
 
@@ -53,6 +82,14 @@ const GameConfiguration = (props: Props): JSX.Element => {
                         <option value="veryHard">Very Hard</option>
                     </select>
                 </div>
+
+                <Button
+                    text={"Share"}
+                    clicked={shareGameHandler}
+                />
+
+                <input type='text' id='share'></input>
+
             </div>
 
             {props.isLoading && 
