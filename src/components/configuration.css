@@ -19,3 +19,26 @@
 .actionable-configurations div {
     margin-right: 16px;
 }
+
+.share-icon-div {
+    cursor: pointer;
+}
+
+#share-input {
+    display: none;
+}
+
+#share-alert-text {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background-color: black;
+    color: white;
+    font-size: small;
+    width: 6em;
+    height: 1.6em;
+    position: relative;
+    left: 0px;
+    top: -7px;
+    border-radius: 4px;
+}

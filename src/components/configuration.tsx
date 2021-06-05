@@ -1,5 +1,6 @@
 import Timer from './Timer';
 import Button from './common/button'
+import ShareSharpIcon from '@material-ui/icons/ShareSharp'
 import { useDispatch } from 'react-redux'
 
 import './configuration.css'
@@ -36,7 +37,7 @@ const GameConfiguration = (props: Props): JSX.Element => {
         props.changeDifficulty(e)
     }
 
-    const shareGameHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const shareGameHandler = (e: any) => {
         let progress = ''
         let row = 0        
         while(row < props.puzzle.length) {
@@ -57,10 +58,24 @@ const GameConfiguration = (props: Props): JSX.Element => {
         }
 
         const url = window.location.origin + window.location.pathname + '?question=' + progress
-        const inputElement: any = document.getElementById('share')
+        const inputElement: any = document.getElementById('share-input')
+        inputElement.style.display = 'block'
         inputElement.value = url
         inputElement.select()
         document.execCommand("copy");
+        inputElement.style.display = 'none'
+
+        showLinkCopiedAlert()
+    }
+
+    const showLinkCopiedAlert = () => {
+        const alert : HTMLElement | null = document.getElementById('share-alert-text')
+        if (alert) {
+            alert.style.display = 'flex'
+            setTimeout(function() {
+                alert.style.display = 'none'
+            }, 3000)
+        }
     }
 
     return(
@@ -83,12 +98,15 @@ const GameConfiguration = (props: Props): JSX.Element => {
                     </select>
                 </div>
 
-                <Button
-                    text={"Share"}
-                    clicked={shareGameHandler}
-                />
+                <div onClick={shareGameHandler} className="share-icon-div">
+                    <ShareSharpIcon />
+                </div>
 
-                <input type='text' id='share'></input>
+                <div id="share-alert-text">
+                    <p>link copied</p>
+                </div>
+
+                <input type='text' id='share-input'></input>
 
             </div>
 
